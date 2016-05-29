@@ -1,0 +1,33 @@
+source,target,LoveRelation
+Iron Man,SHE Hulk,Lover
+Iron Man,Madame Manace,Dated
+Iron Man,Emma Frost,Lover
+Iron Man,The Wasp,Dated
+Iron Man,Black Widow,Dated
+Iron Man,Madanne Rodgers,SeriousRelationship
+Iron Man,Madame Masque,SeriousRelationship
+Iron Man,Pepper Potts,SeriousRelationship
+Iron Man,Bethany Cabe,SeriousRelationship
+Vision,Captain Marvel,Dated
+Vision,Mantis,Lover
+Vision,Scarlet Witch,Married
+Black Widow,Daredevil,SeriousRelationship
+Black Widow,Hercules,Dated
+Black Widow,Hawk Eye,SeriousRelationship
+Black Widow,Bucky Winter Soilder,Lover
+War Machine,War Machine,NoRelationship
+Spider Man,Captain Marvel,Dated
+Spider Man,Black Cat,Dated
+Captain America,Diamondback,Dated
+Captain America,Scarlet Witch,Lover
+Hawk Eye,The Wasp,Lover
+Hawk Eye,Mocking Bird,Married
+Hawk Eye,Spider Woman,Dated
+Hawk Eye,Scarlet Witch,Lover
+Falcon,Falcon,NoRelationship
+Ant Man,The Wasp,Married
+Scarlet Witch,Doctor Doom,SeriousRelationship
+Scarlet Witch,Wonder Man,SeriousRelationship
+Hulk,Hulk,NoRelationship
+Thor,Thor,NoRelationship
+Black Panther,Storm,Married

@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    
+    	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	 <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
+
+	<title>Marvel Civil War Movie Guide</title>
+	<style>
+		body{
+			text-align: center;
+		    font-family: sans-serif;
+		    font-weight: 100;
+		}
+
+		.link {
+		  fill: none;
+		  stroke: #666;
+		  stroke-width: 3px;
+		}
+
+		.link.Lover {
+		  stroke: rgb(153, 107, 195);
+		}
+
+		.link.Dated {
+		  stroke: rgb(56, 106, 197);
+		}
+
+		.link.SeriousRelationship {
+		  stroke: rgb(223, 199, 31);
+		}
+
+		.link.Married {
+		  stroke: rgb(93, 199, 76);
+		}
+
+		circle {
+		  fill: #ccc;
+		  stroke: #333;
+		  stroke-width: 1.5px;
+		}
+		
+		text {
+		  font: 15px sans-serif;
+		  /*pointer-events: none;*/
+		  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+		}
+
+		.preface {
+			font: 20px "Helvetica Neue";
+			background-color: #C10001;
+			text-align: center;
+			color: #E3E0D8;
+			margin-bottom: 20px;
+			padding: 0px 60px 30px 60px;
+		}
+
+		.bigNumber {
+		  	font: 500 60px/250px "Helvetica Neue";
+    		height: 75px;
+    		margin: 10px;
+
+		}
+
+		#relationshipGraph {
+			clear: both;
+			text-align: center;
+		}
+
+		.bigNumberText {
+			font: 300 60px/250px "Helvetica Neue";
+    		height: 75px;
+    		margin: 10px;
+    		text-align: center
+		}
+
+		.after-box {
+			clear: both;
+			height: 250px;
+			width:100%;
+			background-color: #C10001;
+			color:white;
+			text-align: center;
+			font: 500 80px/250px "Passion One";
+			color: #E3E0D8;
+			text-align: center;
+		}
+
+		.header-box {
+
+			height: 300px;
+			width:100%;
+			background-image: url("/Image/Marvel.png");
+			background-size: 100% 100%;
+			background-repeat: no-repeat;
+		}
+
+		.tips {
+			background-color: #C10001;
+			color: #E3E0D8;
+			font-style: italic;
+		}
+
+		div.tooltip {	
+		    position: absolute;			
+		    text-align: left;			
+		    width: 120px;					
+		    height: 50px;					
+		    padding: 5px;				
+		    font: 8px "Helvetica Neue";		
+		    background: #bdc3c7;	
+		    border: 0px;		
+		    border-radius: 8px;			
+		    pointer-events: none;			
+		}
+
+		form {
+	      text-align: center;
+	      margin: 20px;
+	    
+	    }
+
+	    input {
+	      margin: 0 20px;
+	    }
+
+	    .big {
+	    	width: 1em;
+	    	height: 1em;
+	    	
+	    }
+
+	    .radiob {
+	    	display: inline-block;
+	    	font: 15px "Helvetica Neue";
+	    	font-weight: bold;
+	    	height: 20px;
+	    	width: 130px;
+	    	margin:5px 0; 
+    		padding:0.9em 0.2em; 
+	    	text-align: left;
+	    }
+
+	    .sidebyside {
+	        display: inline-block;
+	    }
+
+	    .node {
+		  font: 300 18px "Helvetica Neue", Helvetica, Arial, sans-serif;
+		  fill: #bbb;
+		}
+
+		.node:hover {
+		  fill: #000;
+		}
+
+		.link_cluster_friend, 
+		.link_cluster_enemy {
+		  stroke: #a8a8a8;
+		  stroke-opacity: .3;
+		  fill: none;
+		  pointer-events: none;
+		}
+
+		.node:hover,
+		.node--source,
+		.node--target {
+		  font-weight: 700;
+		}
+
+		.node--source {
+		  fill: #2ca02c;
+		}
+
+		.node--target {
+		  fill: #d62728;
+		}
+
+		.link_cluster_friend--source,
+		.link_cluster_friend--target,
+		.link_cluster_enemy--source,
+		.link_cluster_enemy--target {
+		  stroke-opacity: 1;
+		  stroke-width: 2px;
+		}
+
+		.link_cluster_enemy--source,
+		.link_cluster_enemy--target {
+		  stroke: #d62728;
+		}
+
+		.link_cluster_friend--target, 
+		.link_cluster_friend--source{
+		  stroke: #2ca02c;
+		}
+
+		#clockdiv{
+			font-family: sans-serif;
+			color: #fff;
+			display: inline-block;
+			font-weight: 100;
+			text-align: center;
+			font-size: 30px;
+			margin: 40px;
+		}
+
+		#clockdiv > div{
+			padding: 40px;
+			border-radius: 3px;
+			background: #FF9900;
+			display: inline-block;
+		}
+
+		#clockdiv div > span{
+			padding: 25px;
+			border-radius: 3px;
+			background: #FFCC00;
+			display: inline-block;
+		}
+
+		.smalltext{
+			padding-top: 15px;
+			font-size: 26px;
+		}
+
+		#friendRelationshipGraph {
+			background-color: #bdc3c7;
+		}
+
+		.label {
+			font-size: 120%;
+		}
+
+	</style>
+	<script src="//d3js.org/d3.v3.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/1.10.0/d3-legend.min.js"></script>
+	
+</head>
+
+<body>
+
+	<div class = "header-box">
+	</div>
+	<div class="preface"> 
+		<p>
+			<strong > Captain America: Civil War </strong> </br></br> 
+			is a 2016 American superhero film featuring the Marvel Comics character Captain America, produced by Marvel Studios. After an incident involving the Avengers results in collateral damage, pressure mounts to install a system of accountability, dividing our heroes in two camps...
+			</br>Wait... Before you go to the theatre, what should you know about this movie? Here is YOUR movie guide! 
+		</p>
+	</div>	
+
+	<!-- bigNumber -->
+	<div id = "bigNumber">
+		
+		<div class="bigNumberText"><span class = "bigNumber" id = "bigNumber1">0</span> comics in the last 70 years</div>
+		<div class="bigNumberText"><span class = "bigNumber" id = "bigNumber2">0</span> heroes in the Marvel universe</div>
+		<div class="bigNumberText"><span class = "bigNumber" id = "bigNumber3">0</span> marvel movies been shot</div>
+		<div class="bigNumberText"><span class = "bigNumber" id = "bigNumber4"></span></div>	
+		<div class="bigNumberText"><span class = "bigNumber" id = "bigNumber5"></span></div>	
+		
+		<script>
+			;( function( d3 ) {
+  			
+	  
+		    d3.select("#bigNumber1")
+		        .text( 0 )
+		        .transition()
+		        .duration(3000)
+		        .delay( 500)
+		        .tween( 'text', tweenText( 32000 ) );
+
+
+		    d3.select("#bigNumber2")
+		        .text( 0 )
+		        .transition()
+		        .duration(3000)
+		        .delay( 500)
+		        .tween( 'text', tweenText( 45000 ) );
+
+
+		    d3.select("#bigNumber3")
+		        .text( 0 )
+		        .transition()
+		        .duration(3000)
+		        .delay( 500)
+		        .tween( 'text', tweenText( 756 ) );
+		  
+	    
+			  /**
+			   * Helper functions
+			   */
+			  function tweenText( newValue ) {
+			    return function() {
+			      var currentValue = +this.textContent;
+			      
+			      var i = d3.interpolateRound( currentValue, newValue );
+			      
+			      return function(t) {
+			        this.textContent = i(t);
+			      };
+			    }
+			  }
+			} )( d3 );
+		</script>
+	</div>
+	
+	
+	<div class = "after-box" id = "relationshipGraphHeader_2">
+		Friend Enemy Relationship Graph
+	</div>
+	<div class="tips"> 
+		hover over the name revealing their friend enemy relationship!
+	</div>
+	<!--Friend Relationship Graph-->
+	<div id = "friendRelationshipGraph">
+		
+		 <script>
+			var diameter = 800,
+			    radius = diameter / 2,
+			    innerRadius = radius - 150
+			    padding = 50;
+
+			var cluster = d3.layout.cluster()
+			    .size([360, innerRadius])
+			    .sort(null)
+			    .value(function(d) { return d.size; });
+
+			var bundle = d3.layout.bundle();
+
+			var line = d3.svg.line.radial()
+			    .interpolate("bundle")
+			    .tension(.85)
+			    .radius(function(d) { return d.y; })
+			    .angle(function(d) { return d.x / 180 * Math.PI; });
+
+			var svg_2 = d3.select("body").append("svg")
+			    .attr("width", diameter + padding)
+			    .attr("height", diameter + padding)
+			  .append("g")
+			    .attr("transform", "translate(" + radius + "," + radius + ")");
+			    
+
+			var link = svg_2.append("g").selectAll(".link_cluster_friend"),
+				link_2 = svg_2.append("g").selectAll(".link_cluster_enemy"),
+			    node = svg_2.append("g").selectAll(".node");
+
+			d3.json("/Data/friendEnemyRelation.json", function(error, classes) {
+			  if (error) throw error;
+
+			  var nodes_2 = cluster.nodes(packageHierarchy(classes)),
+			      links_2 = packageImports(nodes_2),
+			      links_3 = packageOutports(nodes_2);
+
+			  link = link
+			      .data(bundle(links_2))
+			    .enter().append("path")
+			      .each(function(d) { d.source = d[0], d.target = d[d.length - 1]; })
+			      .attr("class", "link_cluster_friend")
+			      .attr("d", line);
+
+			  link_2 = link_2
+			      .data(bundle(links_3))
+			    .enter().append("path")
+			      .each(function(d) { d.source = d[0], d.target = d[d.length - 1]; })
+			      .attr("class", "link_cluster_enemy")
+			      .attr("d", line);
+
+			  node = node
+			      .data(nodes_2.filter(function(n) { return !n.children; }))
+			    .enter().append("text")
+			      .attr("class", "node")
+			      .attr("dy", ".31em")
+			      .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + (d.y + 8) + ",0)" + (d.x < 180 ? "" : "rotate(180)"); })
+			      .style("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
+			      .text(function(d) { return d.key; })
+			      .on("mouseover", mouseovered)
+			      .on("mouseout", mouseouted);
+			});
+
+			function mouseovered(d) {
+			  node
+			      .each(function(n) { n.target = n.source = false; });
+
+			  link_2
+			      .classed("link_cluster_enemy--target", function(l) { if (l.target === d) return l.source.source = true; })
+			      .classed("link_cluster_enemy--source", function(l) { if (l.source === d) return l.target.target = true; })
+			    .filter(function(l) { return l.target === d || l.source === d; })
+			      .each(function() { this.parentNode.appendChild(this); });
+
+			  link
+			      .classed("link_cluster_friend--target", function(l) { if (l.target === d) return l.source.source = true; })
+			      .classed("link_cluster_friend--source", function(l) { if (l.source === d) return l.target.target = true; })
+			    .filter(function(l) { return l.target === d || l.source === d; })
+			      .each(function() { this.parentNode.appendChild(this); });
+
+
+			  node
+			      .classed("node--target", function(n) { return n.target; })
+			      .classed("node--source", function(n) { return n.source; });
+
+
+			}
+
+			function mouseouted(d) {
+			  link
+			      .classed("link_cluster_friend--target", false)
+			      .classed("link_cluster_friend--source", false);
+
+			  link_2
+			      .classed("link_cluster_enemy--target", false)
+			      .classed("link_cluster_enemy--source", false);
+
+			  node
+			      .classed("node--target", false)
+			      .classed("node--source", false);
+			}
+
+			d3.select(self.frameElement).style("height", diameter + "px");
+
+			// Lazily construct the package hierarchy from class names.
+			function packageHierarchy(classes) {
+			  var map = {};
+
+			  function find(name, data) {
+			    var node = map[name], i;
+			    if (!node) {
+			      node = map[name] = data || {name: name, children: []};
+			      if (name.length) {
+			        node.parent = find(name.substring(0, i = name.lastIndexOf(".")));
+			        node.parent.children.push(node);
+			        node.key = name.substring(i + 1);
+			      }
+			    }
+			    return node;
+			  }
+
+			  classes.forEach(function(d) {
+			    find(d.name, d);
+			  });
+
+			  return map[""];
+			}
+
+			// Return a list of imports for the given array of nodes.
+			function packageImports(nodes) {
+			  var map = {},
+			      friend = [];
+
+			  // Compute a map from name to node.
+			  nodes.forEach(function(d) {
+			    map[d.name] = d;
+			  });
+
+			  // For each import, construct a link from the source to target node.
+			  nodes.forEach(function(d) {
+			    if (d.friend) d.friend.forEach(function(i) {
+			      friend.push({source: map[d.name], target: map[i]});
+			    });
+			  });
+
+			  return friend;
+			}
+
+			function packageOutports(nodes) {
+			  var map = {},
+			      enemy = [];
+
+			  // Compute a map from name to node.
+			  nodes.forEach(function(d) {
+			    map[d.name] = d;
+			  });
+
+			  // For each import, construct a link from the source to target node.
+			  nodes.forEach(function(d) {
+			    if (d.enemy) d.enemy.forEach(function(i) {
+			      enemy.push({source: map[d.name], target: map[i]});
+			    });
+			  });
+
+			  return enemy;
+			}
+
+			var ordinal_2 = d3.scale.ordinal()
+			  .domain(["Friend", "Enemy"])
+			  .range([ "rgb(0, 128, 0)", "rgb(255, 0, 0)"]);
+
+
+
+			svg_2.append("g")
+			  .attr("class", "legendOrdinal")
+			  .attr("transform", "translate(-420,-350)");
+
+			var legendOrdinal_2 = d3.legend.color()
+			  //d3 symbol creates a path-string, for example
+			  //"M0,-8.059274488676564L9.306048591020996,
+			  //8.059274488676564 -9.306048591020996,8.059274488676564Z"
+			  .shapeWidth(100)
+			  .shapeHeight(3)
+			  .shapePadding(20)
+			  .orient('vertical')
+			  .scale(ordinal_2);
+
+
+			svg_2.select(".legendOrdinal")
+			  .call(legendOrdinal_2);
+		</script>
+		
+	</div>
+
+	<div class = "after-box">
+		Romantic Relationship Graph
+	</div>
+	<div class="tips"> 
+		drag heroes to clear up their complex love relationship!
+	</div>
+	<!--Relationship Graph-->
+	<div id = "relationshipGraph">
+		<svg id = "svg_1" width = "960" height = "800">
+			
+		</svg>
+		
+		<script>
+			var nodes = {};
+			var links = [
+				{source:"IronMan", target:"SHEHulk", relation:"Lover"},
+				{source:"IronMan", target:"MadameManace", relation:"Dated"},
+				{source:"IronMan", target:"EmmaFrost", relation:"Lover"},
+				{source:"IronMan", target:"TheWasp", relation:"Dated"},
+				{source:"IronMan", target:"BlackWidow", relation:"Dated"},
+				{source:"IronMan", target:"MadanneRodgers", relation:"SeriousRelationship"},
+				{source:"IronMan", target:"MadameMasque", relation:"SeriousRelationship"},
+				{source:"IronMan", target:"PepperPotts", relation:"SeriousRelationship"},
+				{source:"IronMan", target:"BethanyCabe", relation:"SeriousRelationship"},
+				{source:"Vision", target:"CaptainMarvel", relation:"Dated"},
+				{source:"Vision", target:"Mantis", relation:"Lover"},
+				{source:"Vision", target:"ScarletWitch", relation:"Married"},
+				{source:"BlackWidow", target:"Daredevil", relation:"SeriousRelationship"},
+				{source:"BlackWidow", target:"Hercules", relation:"Dated"},
+				{source:"BlackWidow", target:"HawkEye", relation:"SeriousRelationship"},
+				{source:"BlackWidow", target:"BulkyWinterSoilder", relation:"Lover"},
+				{source:"WarMachine", target:"WarMachine", relation:"NoRelationship"},
+				{source:"SpiderMan", target:"CaptainMarvel", relation:"Date"},
+				{source:"SpiderMan", target:"BlackCat", relation:"Dated"},
+				{source:"CaptainAmerica", target:"Diamondback", relation:"Dated"},
+				{source:"CaptainAmerica", target:"ScarletWitch", relation:"Lover"},
+				{source:"HawkEye", target:"TheWasp", relation:"Lover"},
+				{source:"HawkEye", target:"MockingBird", relation:"Married"},
+				{source:"HawkEye", target:"SpiderWoman", relation:"Dated"},
+				{source:"HawkEye", target:"ScarletWitch", relation:"Lover"},
+				{source:"Falcon", target:"Falcon", relation:"NoRelationship"},
+				{source:"AntMan", target:"TheWasp", relation:"Married"},
+				{source:"ScarletWitch", target:"DoctorDoom", relation:"SeriousRelationship"},
+				{source:"ScarletWitch", target:"WonderMan", relation:"SeriousRelationship"},
+				{source:"Hulk", target:"Hulk", relation:"NoRelationship"},
+				{source:"Thor", target:"Thor", relation:"NoRelationship"},
+				{source:"BlackPanther", target:"Storm", relation:"Married"},
+			];
+
+			links.forEach(function(link) {
+			  link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+			  link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+			});
+
+			var width = 960, height = 800;
+
+		
+			var force = d3.layout.force()
+			    .nodes(d3.values(nodes))
+			    .links(links)
+			    .size([width, height])
+			    .linkDistance(150)
+			    .charge(-500)
+			    .on("tick", tick)
+			    .start();
+
+			var svg_1 = d3.select("#svg_1");
+
+			//add path
+			var path = svg_1.append("g").selectAll("path")
+			    .data(force.links())
+			  	.enter().append("path")
+			    .attr("class", function(d) { return "link " + d.relation; })
+			    .attr("marker-end", function(d) { return "url(#" + d.relation + ")"; });
+
+			//add nodes
+			var circle = svg_1.append("g").selectAll("circle")
+			    .data(force.nodes())
+			  	.enter().append("circle")
+			  	.attr("id", function(d){ return "node" + d.name; })
+			    .attr("r", 10)
+			    .call(force.drag);
+
+			var grad = svg_1.append("defs").append("linearGradient").attr("id", "grad")
+			    .attr("x1", "0%").attr("x2", "0%").attr("y1", "100%").attr("y2", "0%");
+			grad.append("stop").attr("offset", "50%").style("stop-color", "blue");
+			grad.append("stop").attr("offset", "50%").style("stop-color", "C00001");
+
+			var grad_2 = svg_1.append("defs").append("linearGradient").attr("id", "grad_2")
+			    .attr("x1", "0%").attr("x2", "0%").attr("y1", "100%").attr("y2", "0%");
+			grad_2.append("stop").attr("offset", "50%").style("stop-color", "yellow");
+			grad_2.append("stop").attr("offset", "50%").style("stop-color", "C00001");
+
+			var grad_3 = svg_1.append("defs").append("linearGradient").attr("id", "grad_3")
+			    .attr("x1", "0%").attr("x2", "0%").attr("y1", "100%").attr("y2", "0%");
+			grad_3.append("stop").attr("offset", "33%").style("stop-color", "yellow");
+			grad_3.append("stop").attr("offset", "66%").style("stop-color", "C00001");
+			grad_3.append("stop").attr("offset", "99%").style("stop-color", "blue");
+
+			
+			//add image to node
+			d3.select("#nodeThor")
+				.attr("r", 20)
+				.style("stroke-width", "0px")
+				.style("fill", "url(#grad_3");
+
+			d3.select("#nodeHulk")
+				.attr("r", 20)
+				.style("stroke-width", "0px")
+				.style("fill", "url(#grad_3");
+			d3.select("#nodeAntMan")
+				.attr("r", 20)
+				.style("stroke-width", "0px")
+				.style("fill", "url(#grad");
+			d3.select("#nodeBlackPanther")
+				.attr("r", 20)
+				.style("stroke-width", "0px")
+				.style("fill", "url(#grad_3");
+			d3.select("#nodeBlackWidow")
+				.attr("r", 20)
+				.style("stroke-width", "0px")
+				.style("fill", "url(#grad_2");
+			d3.select("#nodeBulkyWinterSoilder")
+				.attr("r", 20)
+				.style("stroke-width", "0px")
+				.style("fill", "url(#grad");
+			d3.select("#nodeCaptainAmerica")
+				.attr("r", 30)
+				.style("stroke-width", "0px")
+				.style("fill", "url(#grad");
+			d3.select("#nodeFalcon")
+				.attr("r", 20)
+				.style("stroke-width", "0px")
+				.style("fill", "url(#grad");
+			d3.select("#nodeHawkEye")
+				.attr("r", 20)
+				.style("stroke-width", "0px")
+				.style("fill", "url(#grad");
+			d3.select("#nodeIronMan")
+				.attr("r", 30)
+				.style("stroke-width", "0px")
+				.style("fill", "url(#grad_2");;
+			d3.select("#nodeScarletWitch")
+				.attr("r", 20)
+				.style("stroke-width", "0px")
+				.style("fill", "url(#grad");
+			d3.select("#nodeSpiderMan")
+				.attr("r", 20)
+				.style("stroke-width", "0px")
+				.style("fill", "url(#grad_2");
+			d3.select("#nodeVision")
+				.attr("r", 20)
+				.style("stroke-width", "0px")
+				.style("fill", "url(#grad_2");
+			d3.select("#nodeWarMachine")
+				.attr("r", 20)
+				.style("stroke-width", "0px")
+				.style("fill", "url(#grad_2");
+
+
+
+			//add node text
+			var text = svg_1.append("g").selectAll("text")
+			    .data(force.nodes())
+			  .enter().append("text")
+			    .attr("x", 8)
+			    .attr("y", ".31em")
+			    .text(function(d) { return d.name; });
+
+
+			svg_1.selectAll("circle")
+				.on("dragstart", dragstart);
+
+
+			//legend
+			var ordinal = d3.scale.ordinal()
+			  .domain(["Lover", "Dated", "Married", "Serious Relationship"])
+			  .range([ "rgb(153, 107, 195)", "rgb(56, 106, 197)", "rgb(93, 199, 76)", "rgb(223, 199, 31)"]);
+
+
+
+			svg_1.append("g")
+			  .attr("class", "legendOrdinal")
+			  .attr("transform", "translate(18,20)");
+
+			var legendOrdinal = d3.legend.color()
+			  //d3 symbol creates a path-string, for example
+			  //"M0,-8.059274488676564L9.306048591020996,
+			  //8.059274488676564 -9.306048591020996,8.059274488676564Z"
+			  .shapeWidth(100)
+			  .shapeHeight(5)
+			  .shapePadding(20)
+			  .orient('vertical')
+			  .scale(ordinal);
+
+
+			svg_1.select(".legendOrdinal")
+			  .call(legendOrdinal);
+			
+
+			//Use elliptical arc path segments to doubly-encode directionality.
+			function tick() {
+			  path.attr("d", linkArc);
+			  circle.attr("transform", transform);
+			  text.attr("transform", transform);
+			}
+
+			function linkArc(d) {
+			  var dx = d.target.x - d.source.x,
+			      dy = d.target.y - d.source.y,
+			      dr = Math.sqrt(dx * dx + dy * dy);
+			  return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
+			}
+
+			function transform(d) {
+			  return "translate(" + d.x + "," + d.y + ")";
+			}
+
+			function dragstart(d) {
+			  d3.select(this).classed("fixed", d.fixed = true);
+			}
+
+			function mouseover() {
+			  d3.select(this).select("circle").transition()
+			      .duration(750)
+			      .style("fill", "#3498db");
+			}
+
+			function mouseout() {
+			  d3.select(this).select("circle").transition()
+			      .duration(750)
+			      .style("fill", "#3498db");
+			}
+
+		</script>
+		
+	</div>
+
+	<!--Power Ring-->
+	<div class = "after-box">
+		Hero Power Rings
+	</div>
+
+	<div>
+		<form id="ironmantony"  >
+		</form>
+		<form id="captain"  ></form>
+		<div id="chart1" class="sidebyside"></div>
+		<div id="chart2" class="sidebyside"></div>
+
+		<script type="text/javascript">
+		var width_1 = 600,
+			width_2 = 450,
+		      height = 450,
+		      radius = Math.min(width, height) / 2;
+
+		  var color = d3.scale.category20();
+
+		  var pie = d3.layout.pie()
+		      .value(function(d) { return d.count; })
+		      .sort(null);
+
+		  var arc = d3.svg.arc()
+		      .innerRadius(radius - 120)
+		      .outerRadius(radius - 60);
+		  function key(d) {
+		    return d.data.power;
+		  }
+
+		  function type(d) {
+		    d.count = +d.count;
+		    return d;
+		  }
+
+		  function findNeighborArc(i, data0, data1, key) {
+		    var d;
+		    return (d = findPreceding(i, data0, data1, key)) ? {startAngle: d.endAngle, endAngle: d.endAngle}
+		        : (d = findFollowing(i, data0, data1, key)) ? {startAngle: d.startAngle, endAngle: d.startAngle}
+		        : null;
+		  }
+
+		  // Find the element in data0 that joins the highest preceding element in data1.
+		  function findPreceding(i, data0, data1, key) {
+		    var m = data0.length;
+		    while (--i >= 0) {
+		      var k = key(data1[i]);
+		      for (var j = 0; j < m; ++j) {
+		        if (key(data0[j]) === k) return data0[j];
+		      }
+		    }
+		  }
+
+		  // Find the element in data0 that joins the lowest following element in data1.
+		  function findFollowing(i, data0, data1, key) {
+		    var n = data1.length, m = data0.length;
+		    while (++i < n) {
+		      var k = key(data1[i]);
+		      for (var j = 0; j < m; ++j) {
+		        if (key(data0[j]) === k) return data0[j];
+		      }
+		    }
+		  }
+
+		  function arcTween(d) {
+		    var i = d3.interpolate(this._current, d);
+		    this._current = i(0);
+		    return function(t) { return arc(i(t)); };
+		  }
+
+		(function(){
+		  var svg = d3.select("#chart1").append("svg")
+		      .attr("width", width_1)
+		      .attr("height", height)
+		      .append("g")
+		      .attr("transform", "translate(350, 250)");
+
+		  var path = svg.selectAll("path");
+
+		  d3.csv("Data/trainedironman.csv", type, function(error, data) {
+		    var powersByHero = d3.nest()
+		        .key(function(d) { return d.hero; })
+		        .entries(data)
+		        .reverse();
+
+		    var label = d3.select("#ironmantony").selectAll("label")
+		        .data(powersByHero)
+		      .enter().append("label");
+
+		    label.append("input")
+		        .attr("type", "radio")
+		        .attr("name", "hero")
+		        .attr("class", "big")
+		        .attr("value", function(d) { return d.key; })
+		        .on("change", change)
+		        .filter(function(d, i) {
+		          console.log(d);
+		          console.log(i);
+		          return !i;
+		        })
+		        .each(change)
+		        .property("checked", true);
+
+		    label.append("span")
+		    	.attr("class", "radiob")
+		        .text(function(d) { return d.key; });
+
+		    function change(power) {
+		      var data0 = path.data(),
+		          data1 = pie(power.values);
+
+		      path = path.data(data1, key);
+
+		      path.enter().append("path")
+		          .each(function(d, i) { this._current = findNeighborArc(i, data0, data1, key) || d; })
+		          .attr("fill", function(d) { return color(d.data.power); })
+		        .append("title")
+		          .text(function(d) { return d.data.power; });
+
+		      path.exit()
+		          .datum(function(d, i) { return findNeighborArc(i, data1, data0, key) || d; })
+		        .transition()
+		          .duration(750)
+		          .attrTween("d", arcTween)
+		          .remove();
+
+		      path.transition()
+		          .duration(750)
+		          .attrTween("d", arcTween);
+		    }
+		  });
+
+		// legend
+		var ordinal = d3.scale.ordinal()
+			  .domain(["Intelligence", "Strength", "Speed", "Durability", "Energy Projection", "Fighting Skills"])
+			  .range([ "#1f77b4", "#aec7e8", "#ff7f0e", "#ffbb78", "2ca02c", "#98df8a"]);
+
+			svg.append("g")
+			  .attr("class", "legendOrdinal")
+			  .attr("transform", "translate(-350, -200)");
+
+			var legendOrdinal = d3.legend.color()
+			  .shapeWidth(10)
+			  .shapeHeight(10)
+			  .shapePadding(20)
+			  .orient('vertical')
+			  .scale(ordinal);
+
+			svg.select(".legendOrdinal")
+			  .call(legendOrdinal);
+			
+
+		}());
+		  
+		(function(){
+		  var svg = d3.select("#chart2").append("svg")
+		      .attr("width", width_2)
+		      .attr("height", height)
+		      .append("g")
+		      .attr("transform", "translate(200, 250)");
+
+		  var path = svg.selectAll("path");
+
+		  d3.csv("Data/trainedcaptain.csv", type, function(error, data) {
+		    var powersByHero = d3.nest()
+		        .key(function(d) { console.log(d.hero); return d.hero; })
+		        .entries(data)
+		        .reverse();
+
+		        console.log(powersByHero);
+
+		    var label = d3.select("#captain").selectAll("label")
+		        .data(powersByHero)
+		      .enter().append("label");
+
+		    label.append("input")
+		        .attr("type", "radio")
+		        .attr("name", "hero")
+		        .attr("class", "big")
+		        .attr("value", function(d) {  return d.key; })
+		        .on("change", change)
+		      .filter(function(d, i) { return !i; })
+		        .each(change)
+		        .property("checked", true);
+
+		    label.append("span")
+		    	.attr("class", "radiob")
+		    	.text(function(d) { return d.key ; });
+
+		    function change(power) {
+		      var data0 = path.data(),
+		          data1 = pie(power.values);
+
+		      path = path.data(data1, key);
+
+		      path.enter().append("path")
+		          .each(function(d, i) { this._current = findNeighborArc(i, data0, data1, key) || d; })
+		          .attr("fill", function(d) { return color(d.data.power); })
+		        .append("title")
+		          .text(function(d) { return d.data.power; });
+
+		      path.exit()
+		          .datum(function(d, i) { return findNeighborArc(i, data1, data0, key) || d; })
+		        .transition()
+		          .duration(750)
+		          .attrTween("d", arcTween)
+		          .remove();
+
+		      path.transition()
+		          .duration(750)
+		          .attrTween("d", arcTween);
+		    }
+		  });
+		}());
+		</script>
+				
+	</div>
+
+	<!-- the countdown clock is inspired by http://www.sitepoint.com/build-javascript-countdown-timer-no-dependencies/  -->
+	<div class = "after-box">
+		Civil War Movie Countdown
+	</div>
+
+	<div id="clockdiv">
+	  <div>
+	    <span class="days"></span>
+	    <div class="smalltext">Days</div>
+	  </div>
+	  <div>
+	    <span class="hours"></span>
+	    <div class="smalltext">Hours</div>
+	  </div>
+	  <div>
+	    <span class="minutes"></span>
+	    <div class="smalltext">Minutes</div>
+	  </div>
+	  <div>
+	    <span class="seconds"></span>
+	    <div class="smalltext">Seconds</div>
+	  </div>
+
+	  <script type="text/javascript">
+		function getTimeRemaining(endtime) {
+		    var t = endtime - Date.parse(new Date());
+		    var seconds = Math.floor((t / 1000) % 60);
+		    var minutes = Math.floor((t / 1000 / 60) % 60);
+		    var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+		    var days = Math.floor(t / (1000 * 60 * 60 * 24));
+		    return {
+		      'total': t,
+		      'days': days,
+		      'hours': hours,
+		      'minutes': minutes,
+		      'seconds': seconds
+		    };
+		  }
+
+		  function initializeClock(id, endtime) {
+		    var clock = document.getElementById(id);
+		    var daysSpan = clock.querySelector('.days');
+		    var hoursSpan = clock.querySelector('.hours');
+		    var minutesSpan = clock.querySelector('.minutes');
+		    var secondsSpan = clock.querySelector('.seconds');
+
+		    function updateClock() {
+		      var t = getTimeRemaining(endtime);
+
+		      daysSpan.innerHTML = t.days;
+		      hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+		      minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+		      secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+		      if (t.total <= 0) {
+		        clearInterval(timeinterval);
+		      }
+		    }
+
+		    updateClock();
+		    var timeinterval = setInterval(updateClock, 1000);
+		  }
+
+		  var deadline = 1462563592000;
+		  initializeClock('clockdiv', deadline);
+	</script>
+	</div>
+
+	<div class = "after-box">
+		See you at the Cinema!
+	</div>
+	
+</body>
+</html>
